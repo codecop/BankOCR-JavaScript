@@ -4,6 +4,17 @@ class Digit {
         this.lines = lines;
     }
 
+    isEqual(other) {
+        let ok = true;
+        for (let row = 0; row < 4; ++row) {
+            for (let col = 0; col < 4; ++col) {
+                if (this.lines[row][col] !== other.lines[row][col])
+                    ok = false;
+            }
+        }
+        return ok;
+    }
+
 }
 
 const NUMERALS = [
@@ -99,13 +110,7 @@ class Ocr {
                 let y = new Digit(x);
 
                 for (let numeral = 0; numeral <= 9; ++numeral) {
-                    let ok = true;
-                    for (let row = 0; row < 4; ++row) {
-                        for (let col = 0; col < 4; ++col) {
-                            if (NUMERALS[numeral].lines[row][col] !== y.lines[row][col])
-                                ok = false;
-                        }
-                    }
+                    let ok = NUMERALS[numeral].isEqual(y);
                     if (ok) {
                         work.setNextDigitTo(numeral);
                         got1 = true;
