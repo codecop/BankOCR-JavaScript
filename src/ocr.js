@@ -127,6 +127,14 @@ class AccountNumberBuilder {
 
 }
 
+class Input {
+
+    constructor(lines) {
+        this.lines = lines;
+    }
+
+}   
+
 class Ocr {
 
     /**
@@ -138,6 +146,7 @@ class Ocr {
         const result = [];
 
         const numerals = new Numerals();
+        const input = new Input(lines);
 
         for (let i = 0; i < lines.length; i += numerals.digitHeight()) {
             let work = new AccountNumberBuilder();
