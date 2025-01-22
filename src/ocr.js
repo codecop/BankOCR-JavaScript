@@ -41,7 +41,7 @@ const NUMERALS = [
         ' _| ',
         '    ']];
 
-class AccountNumber {
+class AccountNumberBuilder {
 
     constructor() {
         this.work = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
@@ -51,7 +51,7 @@ class AccountNumber {
     }
 
     setDigitAt(pos, numeral) {
-        this.work[pos] = String.fromCharCode(numeral + '0'.charCodeAt(0));
+        this.work[pos] = "" + numeral;
     }
 
     markIllegal() {
@@ -76,7 +76,7 @@ class Ocr {
         /** @type {string[]} */
         const result = [];
         for (let i = 0; i < lines.length; i += 4) {
-            let work = new AccountNumber();
+            let work = new AccountNumberBuilder();
             for (let pos = 0; pos < 9; ++pos) {
                 let got1 = false;
                 for (let numeral = 0; numeral <= 9; ++numeral) {
