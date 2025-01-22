@@ -17,47 +17,53 @@ class Digit {
 
 }
 
-const NUMERALS = [
-    new Digit([' _  ',
-        '| | ',
-        '|_| ',
-        '    ']),
-    new Digit(['    ',
-        '  | ',
-        '  | ',
-        '    ']),
-    new Digit([' _  ',
-        ' _| ',
-        '|_  ',
-        '    ']),
-    new Digit([' _  ',
-        ' _| ',
-        ' _| ',
-        '    ']),
-    new Digit(['    ',
-        '|_| ',
-        '  | ',
-        '    ']),
-    new Digit([' _  ',
-        '|_  ',
-        ' _| ',
-        '    ']),
-    new Digit([' _  ',
-        '|_  ',
-        '|_| ',
-        '    ']),
-    new Digit([' _  ',
-        '  | ',
-        '  | ',
-        '    ']),
-    new Digit([' _  ',
-        '|_| ',
-        '|_| ',
-        '    ']),
-    new Digit([' _  ',
-        '|_| ',
-        ' _| ',
-        '    '])];
+class Numerals {
+
+    constructor() {
+        this.numerals = [
+             new Digit([' _  ',
+                        '| | ',
+                        '|_| ',
+                        '    ']),
+             new Digit(['    ',
+                        '  | ',
+                        '  | ',
+                        '    ']),
+             new Digit([' _  ',
+                        ' _| ',
+                        '|_  ',
+                        '    ']),
+             new Digit([' _  ',
+                        ' _| ',
+                        ' _| ',
+                        '    ']),
+             new Digit(['    ',
+                        '|_| ',
+                        '  | ',
+                        '    ']),
+             new Digit([' _  ',
+                        '|_  ',
+                        ' _| ',
+                        '    ']),
+             new Digit([' _  ',
+                        '|_  ',
+                        '|_| ',
+                        '    ']),
+             new Digit([' _  ',
+                        '  | ',
+                        '  | ',
+                        '    ']),
+             new Digit([' _  ',
+                        '|_| ',
+                        '|_| ',
+                        '    ']),
+             new Digit([' _  ',
+                        '|_| ',
+                        ' _| ',
+                        '    '])];
+    }
+
+}
 
 /**
  * Encapsulates logic to build the Account Number representation including marker.
@@ -101,6 +107,9 @@ class Ocr {
     static parse(lines) {
         /** @type {string[]} */
         const result = [];
+
+        const NUMERALS = new Numerals();
+
         for (let i = 0; i < lines.length; i += 4) {
             let work = new AccountNumberBuilder();
             for (let pos = 0; pos < 9; ++pos) {
@@ -114,7 +123,7 @@ class Ocr {
                 let got1 = false;
 
                 for (let numeral = 0; numeral <= 9; ++numeral) {
-                    if (NUMERALS[numeral].isEqual(digit)) {
+                    if (NUMERALS.numerals[numeral].isEqual(digit)) {
                         work.setNextDigitTo(numeral);
                         got1 = true;
                         break;
