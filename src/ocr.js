@@ -1,18 +1,15 @@
 class Digit {
 
-    constructor(lines) {
-        this.lines = lines;
+    constructor(segments) {
+        this.segments = segments;
     }
 
     isEqual(other) {
-        let ok = true;
-        for (let row = 0; row < 4; ++row) {
-            for (let col = 0; col < 4; ++col) {
-                if (this.lines[row][col] !== other.lines[row][col])
-                    ok = false;
-            }
+        for (let row = 0; row < this.segments.length; ++row) {
+            if (this.segments[row] !== other.segments[row])
+                return false;
         }
-        return ok;
+        return true;
     }
 
 }
