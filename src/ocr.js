@@ -43,17 +43,17 @@ const NUMERALS = [
 
 class AccountNumberBuilder {
 
-    constructor(length = 9) {
-        this.work = [];
+    constructor() {
+        this.work = "";
         this.illegal = false;
     }
 
     setDigitAt(pos, numeral) {
-        this.work[pos] = "" + numeral;
+        this.work += numeral;
     }
 
     setUnknownAt(pos) {
-        this.work[pos] = "?";
+        this.work += "?";
     }
 
     markAsIllegal() {
@@ -61,8 +61,7 @@ class AccountNumberBuilder {
     }
 
     toString() {
-        const numbers = this.work.join('');
-        return `${numbers} ${this.marker()}`;
+        return `${this.work} ${this.marker()}`;
     }
 
     marker() {
