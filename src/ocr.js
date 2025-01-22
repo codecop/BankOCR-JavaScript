@@ -8,9 +8,10 @@ class Digit {
     }
 
     isEqual(other) {
-        for (let row = 0; row < this.segments.length; ++row) {
-            if (this.segments[row] !== other.segments[row])
+        for (let y = 0; y < this.segments.length; ++y) {
+            if (this.segments[y] !== other.segments[y]) {
                 return false;
+            }
         }
         return true;
     }
@@ -127,28 +128,32 @@ class AccountNumberBuilder {
 
 }
 
-class Input {
+/**
+ * A document contains one or more lines.
+ */
+class Document {
 
-    constructor(allLines, digitWidth, lineHeight) {
-        this.allLines = allLines;
+    constructor(rawLines, digitWidth, digitHeight) {
+        this.rawLines = rawLines;
+
         this.digitWidth = digitWidth;
-        this.lineHeight = lineHeight;
+        this.digitHeight = digitHeight;
+
         this.i = 0;
     }
 
     hasNext() {
-        return this.i < this.allLines.length;
+        return this.i < this.rawLines.length;
     }
 
     nextLine() {
-        const lines = [];
-        for (let row = 0; row < this.lineHeight; ++row) {
-            lines.push(this.allLines[this.i + row]);
+        const groupOfLines = [];
+        for (let y = 0; y < this.digitHeight; ++y) {
+            groupOfLines.push(this.rawLines[this.i]);
+            this.i++;
         }
 
-        this.i += this.lineHeight;
-
-        return new Line(this.digitWidth, lines);
+        return new Line(groupOfLines, this.digitWidth);
     }
 
 }
@@ -158,17 +163,17 @@ class Input {
  */
 class Line {
 
-    constructor(digitWidth, lines) {
+    constructor(groupOfLines, digitWidth) {
+        this.groupOfLines = groupOfLines;
         this.digitWidth = digitWidth;
-        this.lines = lines;
     }
 
     getDigitAt(pos) {
-        const digitStartPos = pos * this.digitWidth;
+        const digitStartPosX = pos * this.digitWidth;
 
         const segments = [];
-        for (let row = 0; row < this.lines.length; ++row) {
-            const segment = this.lines[row].substring(digitStartPos, digitStartPos + this.digitWidth);
+        for (let y = 0; y < this.groupOfLines.length; ++y) {
+            const segment = this.groupOfLines[y].substring(digitStartPosX, digitStartPosX + this.digitWidth);
             segments.push(segment);
         }
 
@@ -187,7 +192,7 @@ class Ocr {
         const result = [];
 
         const numerals = new Numerals();
-        const input = new Input(lines, numerals.digitWidth(), numerals.digitHeight());
+        const input = new Document(lines, numerals.digitWidth(), numerals.digitHeight());
         while (input.hasNext()) {
             const line = input.nextLine();
 
