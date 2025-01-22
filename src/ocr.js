@@ -45,14 +45,15 @@ class AccountNumberBuilder {
 
     constructor(length = 9) {
         this.work = [];
-        for (let pos = 0; pos < length; ++pos) {
-            this.work[pos] = '?';
-        }
         this.illegal = false;
     }
 
     setDigitAt(pos, numeral) {
         this.work[pos] = "" + numeral;
+    }
+
+    setUnknownAt(pos) {
+        this.work[pos] = "?";
     }
 
     markAsIllegal() {
@@ -61,14 +62,14 @@ class AccountNumberBuilder {
 
     toString() {
         const numbers = this.work.join('');
-        return numbers + this.marker();
+        return `${numbers} ${this.marker()}`;
     }
 
     marker() {
         if (this.illegal) {
-            return " ILL";
+            return "ILL";
         } else {
-            return "    ";
+            return "   ";
         }
     }
 
@@ -102,6 +103,7 @@ class Ocr {
                     }
                 }
                 if (!got1) {
+                    work.setUnknownAt(pos);
                     work.markAsIllegal();
                 }
             }
