@@ -1,3 +1,6 @@
+/**
+ * This is a single digit, containing a number of segments. It can compare itself.
+ */
 class Digit {
 
     constructor(segments) {
@@ -56,6 +59,9 @@ const NUMERALS = [
         ' _| ',
         '    '])];
 
+/**
+ * Encapsulates logic to build the Account Number representation including marker.
+ */
 class AccountNumberBuilder {
 
     constructor() {
