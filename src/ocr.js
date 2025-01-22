@@ -203,6 +203,16 @@ class Ocr {
         return accountNumber.toString();
     }
 
+    parseAccountNumbers(document) {
+        /** @type {string[]} */
+        const accountNumbers = [];
+        while (document.hasNext()) {
+            let accountNumber = this.parseAccountNumber(document.nextLine());
+            accountNumbers.push(accountNumber);
+        }
+        return accountNumbers;
+    }
+
     /**
      * @param {string[]} lines 
      * @returns {string[]}
@@ -212,13 +222,8 @@ class Ocr {
         const result = [];
 
         const numerals = new Numerals();
-        const input = new Document(lines, numerals.digitWidth(), numerals.digitHeight());
-        while (input.hasNext()) {
-            let x = new Ocr().parseAccountNumber(input.nextLine());
-
-            result.push(x);
-        }
-        return result;
+        const document = new Document(lines, numerals.digitWidth(), numerals.digitHeight());
+        return new Ocr().parseAccountNumbers(document);
     }
 }
 
