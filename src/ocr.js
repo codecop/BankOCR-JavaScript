@@ -63,6 +63,15 @@ class Numerals {
                         '    '])];
     }
 
+    identify(digit) {
+        for (let numeral = 0; numeral < this.numerals.length; ++numeral) {
+            if (this.numerals[numeral].isEqual(digit)) {
+                return numeral;
+            }
+        }
+        return -1;
+    }
+
 }
 
 /**
@@ -120,17 +129,10 @@ class Ocr {
                 }
                 const digit = new Digit(segments);
 
-                let got1 = false;
-
-                for (let numeral = 0; numeral <= 9; ++numeral) {
-                    if (NUMERALS.numerals[numeral].isEqual(digit)) {
-                        work.setNextDigitTo(numeral);
-                        got1 = true;
-                        break;
-                    }
-                }
-
-                if (!got1) {
+                const numeral = NUMERALS.identify(digit);
+                if (numeral >= 0) {
+                    work.setNextDigitTo(numeral);
+                } else {
                     work.setNextDigitToUnknown();
                 }
             }
