@@ -129,8 +129,26 @@ class AccountNumberBuilder {
 
 class Input {
 
-    constructor(lines) {
-        this.lines = lines;
+    constructor(allLines, digitWidth, lineHeight) {
+        this.allLines = allLines;
+        this.digitWidth = digitWidth;
+        this.lineHeight = lineHeight;
+        this.i = 0;
+    }
+
+    hasNext() {
+        return this.i < this.allLines.length;
+    }
+
+    nextLine() {
+        const lines = [];
+        for (let row = 0; row < this.lineHeight; ++row) {
+            lines.push(this.allLines[this.i + row]);
+        }
+
+        this.i += this.lineHeight;
+
+        return new Line(this.digitWidth, lines);
     }
 
 }
@@ -169,16 +187,9 @@ class Ocr {
         const result = [];
 
         const numerals = new Numerals();
-        const input = new Input(lines);
-
-        for (let i = 0; i < lines.length; i += numerals.digitHeight()) {
-
-            const xxx = [];
-            for (let row = 0; row < numerals.digitHeight(); ++row) {
-                xxx.push(lines[i + row]);
-            }
-            const line = new Line(numerals.digitWidth(), xxx);
-
+        const input = new Input(lines, numerals.digitWidth(), numerals.digitHeight());
+        while (input.hasNext()) {
+            const line = input.nextLine();
 
             let work = new AccountNumberBuilder();
             for (let pos = 0; pos < 9; ++pos) {
@@ -191,7 +202,7 @@ class Ocr {
                 }
             }
             const x = work.toString();
-            
+
             result.push(x);
         }
         return result;
