@@ -183,13 +183,13 @@ class Line {
 
 class Ocr {
 
-    constructor() { 
+    constructor() {
         this.numerals = new Numerals();
     }
 
     parseAccountNumber(line) {
         let accountNumber = new AccountNumberBuilder();
-        
+
         for (let pos = 0; pos < 9; ++pos) {
             const digit = line.getDigitAt(pos);
             const numeral = this.numerals.identify(digit);
@@ -213,17 +213,17 @@ class Ocr {
         return accountNumbers;
     }
 
+    parseInput(lines) {
+        const document = new Document(lines, this.numerals.digitWidth(), this.numerals.digitHeight());
+        return this.parseAccountNumbers(document);
+    }
+
     /**
      * @param {string[]} lines 
      * @returns {string[]}
      */
     static parse(lines) {
-        /** @type {string[]} */
-        const result = [];
-
-        const numerals = new Numerals();
-        const document = new Document(lines, numerals.digitWidth(), numerals.digitHeight());
-        return new Ocr().parseAccountNumbers(document);
+        return new Ocr().parseInput(lines);
     }
 }
 
