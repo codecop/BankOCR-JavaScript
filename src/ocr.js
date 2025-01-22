@@ -1,45 +1,52 @@
+class Digit {
+
+    constructor(lines) {
+        this.lines = lines;
+    }
+
+}
 
 const NUMERALS = [
-    [' _  ',
+    new Digit([' _  ',
         '| | ',
         '|_| ',
-        '    '],
-    ['    ',
+        '    ']),
+    new Digit(['    ',
         '  | ',
         '  | ',
-        '    '],
-    [' _  ',
+        '    ']),
+    new Digit([' _  ',
         ' _| ',
         '|_  ',
-        '    '],
-    [' _  ',
+        '    ']),
+    new Digit([' _  ',
         ' _| ',
         ' _| ',
-        '    '],
-    ['    ',
+        '    ']),
+    new Digit(['    ',
         '|_| ',
         '  | ',
-        '    '],
-    [' _  ',
+        '    ']),
+    new Digit([' _  ',
         '|_  ',
         ' _| ',
-        '    '],
-    [' _  ',
+        '    ']),
+    new Digit([' _  ',
         '|_  ',
         '|_| ',
-        '    '],
-    [' _  ',
+        '    ']),
+    new Digit([' _  ',
         '  | ',
         '  | ',
-        '    '],
-    [' _  ',
+        '    ']),
+    new Digit([' _  ',
         '|_| ',
         '|_| ',
-        '    '],
-    [' _  ',
+        '    ']),
+    new Digit([' _  ',
         '|_| ',
         ' _| ',
-        '    ']];
+        '    '])];
 
 class AccountNumberBuilder {
 
@@ -88,7 +95,7 @@ class Ocr {
                     let ok = true;
                     for (let row = 0; row < 4; ++row) {
                         for (let col = 0; col < 4; ++col) {
-                            if (NUMERALS[numeral][row][col] !== lines[i + row][4 * pos + col])
+                            if (NUMERALS[numeral].lines[row][col] !== lines[i + row][4 * pos + col])
                                 ok = false;
                         }
                     }
