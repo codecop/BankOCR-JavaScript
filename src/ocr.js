@@ -50,11 +50,16 @@ class AccountNumber {
         }
     }
 
-    newFunction() {
+    markIllegal() {
         this.work[10] = 'I';
-        this.work[11] = this.work[12] = 'L';
+        this.work[11] = 'L';
+        this.work[12] = 'L';
     }
-    
+
+    toString() {
+        return this.work.join('');
+    }
+
 }
 
 class Ocr {
@@ -85,10 +90,10 @@ class Ocr {
                     }
                 }
                 if (!got1) {
-                    work.newFunction();
+                    work.markIllegal();
                 }
             }
-            result.push(work.work.join(''));
+            result.push(work.toString());
         }
         return result;
     }
