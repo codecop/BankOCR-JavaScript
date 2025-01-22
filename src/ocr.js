@@ -137,19 +137,19 @@ class Ocr {
         /** @type {string[]} */
         const result = [];
 
-        const NUMERALS = new Numerals();
+        const numerals = new Numerals();
 
-        for (let i = 0; i < lines.length; i += NUMERALS.digitHeight()) {
+        for (let i = 0; i < lines.length; i += numerals.digitHeight()) {
             let work = new AccountNumberBuilder();
             for (let pos = 0; pos < 9; ++pos) {
-
+                const x = numerals.digitWidth();
                 const segments = [];
-                for (let row = 0; row < 4; ++row) {
-                    segments.push(lines[i + row].substring(4 * pos, 4 * pos + 4));
+                for (let row = 0; row < numerals.digitHeight(); ++row) {
+                    segments.push(lines[i + row].substring(x * pos, x * pos + x));
                 }
                 const digit = new Digit(segments);
 
-                const numeral = NUMERALS.identify(digit);
+                const numeral = numerals.identify(digit);
                 if (numeral >= 0) {
                     work.setNextDigitTo(numeral);
                 } else {
