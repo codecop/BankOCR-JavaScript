@@ -43,25 +43,29 @@ const NUMERALS = [
 
 class AccountNumberBuilder {
 
-    constructor() {
-        this.work = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
-        for (let pos = 0; pos < 9; ++pos) {
+    constructor(length = 9) {
+        this.work = [];
+        for (let pos = 0; pos < length; ++pos) {
             this.work[pos] = '?';
         }
+        this.illegal = false;
     }
 
     setDigitAt(pos, numeral) {
         this.work[pos] = "" + numeral;
     }
 
-    markIllegal() {
-        this.work[10] = 'I';
-        this.work[11] = 'L';
-        this.work[12] = 'L';
+    markAsIllegal() {
+        this.illegal = true;
     }
 
     toString() {
-        return this.work.join('');
+        const numbers = this.work.join('');
+        if (this.illegal) {
+            return numbers + " ILL";
+        } else {
+            return numbers + "    ";
+        }
     }
 
 }
@@ -94,7 +98,7 @@ class Ocr {
                     }
                 }
                 if (!got1) {
-                    work.markIllegal();
+                    work.markAsIllegal();
                 }
             }
             result.push(work.toString());
