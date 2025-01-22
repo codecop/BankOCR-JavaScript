@@ -61,10 +61,14 @@ class AccountNumberBuilder {
 
     toString() {
         const numbers = this.work.join('');
+        return numbers + this.marker();
+    }
+
+    marker() {
         if (this.illegal) {
-            return numbers + " ILL";
+            return " ILL";
         } else {
-            return numbers + "    ";
+            return "    ";
         }
     }
 
