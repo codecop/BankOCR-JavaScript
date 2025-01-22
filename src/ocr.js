@@ -183,6 +183,26 @@ class Line {
 
 class Ocr {
 
+    constructor() { 
+        this.numerals = new Numerals();
+    }
+
+    parseAccountNumber(line) {
+        let accountNumber = new AccountNumberBuilder();
+        
+        for (let pos = 0; pos < 9; ++pos) {
+            const digit = line.getDigitAt(pos);
+            const numeral = this.numerals.identify(digit);
+            if (numeral >= 0) {
+                accountNumber.setNextDigitTo(numeral);
+            } else {
+                accountNumber.setNextDigitToUnknown();
+            }
+        }
+
+        return accountNumber.toString();
+    }
+
     /**
      * @param {string[]} lines 
      * @returns {string[]}
@@ -194,19 +214,7 @@ class Ocr {
         const numerals = new Numerals();
         const input = new Document(lines, numerals.digitWidth(), numerals.digitHeight());
         while (input.hasNext()) {
-            const line = input.nextLine();
-
-            let work = new AccountNumberBuilder();
-            for (let pos = 0; pos < 9; ++pos) {
-                const digit = line.getDigitAt(pos);
-                const numeral = numerals.identify(digit);
-                if (numeral >= 0) {
-                    work.setNextDigitTo(numeral);
-                } else {
-                    work.setNextDigitToUnknown();
-                }
-            }
-            const x = work.toString();
+            let x = new Ocr().parseAccountNumber(input.nextLine());
 
             result.push(x);
         }
