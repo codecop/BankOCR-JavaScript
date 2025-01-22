@@ -149,12 +149,18 @@ class Ocr {
         const input = new Input(lines);
 
         for (let i = 0; i < lines.length; i += numerals.digitHeight()) {
+            const line = [];
+            for (let row = 0; row < numerals.digitHeight(); ++row) {
+                line.push(lines[i + row]);
+            }
+
+
             let work = new AccountNumberBuilder();
             for (let pos = 0; pos < 9; ++pos) {
                 const x = numerals.digitWidth();
                 const segments = [];
                 for (let row = 0; row < numerals.digitHeight(); ++row) {
-                    segments.push(lines[i + row].substring(x * pos, x * pos + x));
+                    segments.push(line[row].substring(x * pos, x * pos + x));
                 }
                 const digit = new Digit(segments);
 
