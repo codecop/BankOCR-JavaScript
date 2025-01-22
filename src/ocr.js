@@ -101,22 +101,23 @@ class Ocr {
         for (let i = 0; i < lines.length; i += 4) {
             let work = new AccountNumberBuilder();
             for (let pos = 0; pos < 9; ++pos) {
+
+                const segments = [];
+                for (let row = 0; row < 4; ++row) {
+                    segments.push(lines[i + row].substring(4 * pos, 4 * pos + 4));
+                }
+                const digit = new Digit(segments);
+
                 let got1 = false;
 
-                let x = [];
-                for (let row = 0; row < 4; ++row) {
-                    x.push(lines[i + row].substring(4 * pos, 4 * pos + 4));
-                }
-                let y = new Digit(x);
-
                 for (let numeral = 0; numeral <= 9; ++numeral) {
-                    let ok = NUMERALS[numeral].isEqual(y);
-                    if (ok) {
+                    if (NUMERALS[numeral].isEqual(digit)) {
                         work.setNextDigitTo(numeral);
                         got1 = true;
                         break;
                     }
                 }
+
                 if (!got1) {
                     work.setNextDigitToUnknown();
                 }
