@@ -91,11 +91,18 @@ class Ocr {
             let work = new AccountNumberBuilder();
             for (let pos = 0; pos < 9; ++pos) {
                 let got1 = false;
+
+                let x = [];
+                for (let row = 0; row < 4; ++row) {
+                    x.push(lines[i + row].substring(4 * pos, 4 * pos + 4));
+                }
+                let y = new Digit(x);
+
                 for (let numeral = 0; numeral <= 9; ++numeral) {
                     let ok = true;
                     for (let row = 0; row < 4; ++row) {
                         for (let col = 0; col < 4; ++col) {
-                            if (NUMERALS[numeral].lines[row][col] !== lines[i + row][4 * pos + col])
+                            if (NUMERALS[numeral].lines[row][col] !== y.lines[row][col])
                                 ok = false;
                         }
                     }
