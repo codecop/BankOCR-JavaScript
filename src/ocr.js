@@ -172,19 +172,17 @@ class Ocr {
         const input = new Input(lines);
 
         for (let i = 0; i < lines.length; i += numerals.digitHeight()) {
-            const line = [];
+
+            const xxx = [];
             for (let row = 0; row < numerals.digitHeight(); ++row) {
-                line.push(lines[i + row]);
+                xxx.push(lines[i + row]);
             }
-            const x = numerals.digitWidth();
-            const l = new Line(x, line);
+            const line = new Line(numerals.digitWidth(), xxx);
 
 
             let work = new AccountNumberBuilder();
             for (let pos = 0; pos < 9; ++pos) {
-                const x = numerals.digitWidth();
-                const digit = l.getDigitAt(pos);
-
+                const digit = line.getDigitAt(pos);
                 const numeral = numerals.identify(digit);
                 if (numeral >= 0) {
                     work.setNextDigitTo(numeral);
@@ -192,7 +190,9 @@ class Ocr {
                     work.setNextDigitToUnknown();
                 }
             }
-            result.push(work.toString());
+            const x = work.toString();
+            
+            result.push(x);
         }
         return result;
     }
