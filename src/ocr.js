@@ -135,19 +135,26 @@ class Input {
 
 }
 
+/**
+ * A line of the Input which is a series of digits.
+ */
 class Line {
-    constructor(width, lines) {
-        this.width = width;
+
+    constructor(digitWidth, lines) {
+        this.digitWidth = digitWidth;
         this.lines = lines;
     }
 
     getDigitAt(pos) {
+        const digitStartPos = pos * this.digitWidth;
+
         const segments = [];
         for (let row = 0; row < this.lines.length; ++row) {
-            segments.push(this.lines[row].substring(this.width * pos, this.width * pos + this.width));
+            const segment = this.lines[row].substring(digitStartPos, digitStartPos + this.digitWidth);
+            segments.push(segment);
         }
-        const digit = new Digit(segments);
-        return digit;
+
+        return new Digit(segments);
     }
 }
 
