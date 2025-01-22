@@ -17,59 +17,63 @@ class Digit {
 
 }
 
+/**
+ * This is a container for a number of digits that we want to identify.
+ */
 class Numerals {
 
     constructor() {
-        this.numerals = [
-             new Digit([' _  ',
-                        '| | ',
-                        '|_| ',
-                        '    ']),
-             new Digit(['    ',
-                        '  | ',
-                        '  | ',
-                        '    ']),
-             new Digit([' _  ',
-                        ' _| ',
-                        '|_  ',
-                        '    ']),
-             new Digit([' _  ',
-                        ' _| ',
-                        ' _| ',
-                        '    ']),
-             new Digit(['    ',
-                        '|_| ',
-                        '  | ',
-                        '    ']),
-             new Digit([' _  ',
-                        '|_  ',
-                        ' _| ',
-                        '    ']),
-             new Digit([' _  ',
-                        '|_  ',
-                        '|_| ',
-                        '    ']),
-             new Digit([' _  ',
-                        '  | ',
-                        '  | ',
-                        '    ']),
-             new Digit([' _  ',
-                        '|_| ',
-                        '|_| ',
-                        '    ']),
-             new Digit([' _  ',
-                        '|_| ',
-                        ' _| ',
-                        '    '])];
+        this.digits = [
+            new Digit([' _  ',
+                       '| | ',
+                       '|_| ',
+                       '    ']),
+            new Digit(['    ',
+                       '  | ',
+                       '  | ',
+                       '    ']),
+            new Digit([' _  ',
+                       ' _| ',
+                       '|_  ',
+                       '    ']),
+            new Digit([' _  ',
+                       ' _| ',
+                       ' _| ',
+                       '    ']),
+            new Digit(['    ',
+                       '|_| ',
+                       '  | ',
+                       '    ']),
+            new Digit([' _  ',
+                       '|_  ',
+                       ' _| ',
+                       '    ']),
+            new Digit([' _  ',
+                       '|_  ',
+                       '|_| ',
+                       '    ']),
+            new Digit([' _  ',
+                       '  | ',
+                       '  | ',
+                       '    ']),
+            new Digit([' _  ',
+                       '|_| ',
+                       '|_| ',
+                       '    ']),
+            new Digit([' _  ',
+                       '|_| ',
+                       ' _| ',
+                       '    '])];
     }
 
     identify(digit) {
-        for (let numeral = 0; numeral < this.numerals.length; ++numeral) {
-            if (this.numerals[numeral].isEqual(digit)) {
+        for (let numeral = 0; numeral < this.digits.length; ++numeral) {
+            if (this.digits[numeral].isEqual(digit)) {
                 return numeral;
             }
         }
         return -1;
+        // if we do not want the marker we need to return a result or accept two lambdas.
     }
 
 }
