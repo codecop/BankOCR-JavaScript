@@ -1,53 +1,60 @@
 
 const NUMERALS = [
     [' _  ',
-     '| | ',
-     '|_| ',
-     '    '],
+        '| | ',
+        '|_| ',
+        '    '],
     ['    ',
-     '  | ',
-     '  | ',
-     '    '],
+        '  | ',
+        '  | ',
+        '    '],
     [' _  ',
-     ' _| ',
-     '|_  ',
-     '    '],
+        ' _| ',
+        '|_  ',
+        '    '],
     [' _  ',
-     ' _| ',
-     ' _| ',
-     '    '],
+        ' _| ',
+        ' _| ',
+        '    '],
     ['    ',
-     '|_| ',
-     '  | ',
-     '    '],
+        '|_| ',
+        '  | ',
+        '    '],
     [' _  ',
-     '|_  ',
-     ' _| ',
-     '    '],
+        '|_  ',
+        ' _| ',
+        '    '],
     [' _  ',
-     '|_  ',
-     '|_| ',
-     '    '],
+        '|_  ',
+        '|_| ',
+        '    '],
     [' _  ',
-     '  | ',
-     '  | ',
-     '    '],
+        '  | ',
+        '  | ',
+        '    '],
     [' _  ',
-     '|_| ',
-     '|_| ',
-     '    '],
+        '|_| ',
+        '|_| ',
+        '    '],
     [' _  ',
-     '|_| ',
-     ' _| ',
-     '    ']];
+        '|_| ',
+        ' _| ',
+        '    ']];
 
 class AccountNumber {
 
     constructor() {
         this.work = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+        for (let pos = 0; pos < 9; ++pos) {
+            this.work[pos] = '?';
+        }
     }
 
-
+    newFunction() {
+        this.work[10] = 'I';
+        this.work[11] = this.work[12] = 'L';
+    }
+    
 }
 
 class Ocr {
@@ -62,7 +69,6 @@ class Ocr {
         for (let i = 0; i < lines.length; i += 4) {
             let work = new AccountNumber();
             for (let pos = 0; pos < 9; ++pos) {
-                work.work[pos] = '?';
                 let got1 = false;
                 for (let numeral = 0; numeral <= 9; ++numeral) {
                     let ok = true;
@@ -79,8 +85,7 @@ class Ocr {
                     }
                 }
                 if (!got1) {
-                    work.work[10] = 'I';
-                    work.work[11] = work.work[12] = 'L';
+                    work.newFunction();
                 }
             }
             result.push(work.work.join(''));
