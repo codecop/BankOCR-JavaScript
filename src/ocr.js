@@ -41,6 +41,15 @@ const NUMERALS = [
      ' _| ',
      '    ']];
 
+class AccountNumber {
+
+    constructor() {
+        this.work = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+    }
+
+
+}
+
 class Ocr {
 
     /**
@@ -51,9 +60,9 @@ class Ocr {
         /** @type {string[]} */
         const result = [];
         for (let i = 0; i < lines.length; i += 4) {
-            let work = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+            let work = new AccountNumber();
             for (let pos = 0; pos < 9; ++pos) {
-                work[pos] = '?';
+                work.work[pos] = '?';
                 let got1 = false;
                 for (let numeral = 0; numeral <= 9; ++numeral) {
                     let ok = true;
@@ -64,17 +73,17 @@ class Ocr {
                         }
                     }
                     if (ok) {
-                        work[pos] = String.fromCharCode(numeral + '0'.charCodeAt(0));
+                        work.work[pos] = String.fromCharCode(numeral + '0'.charCodeAt(0));
                         got1 = true;
                         break;
                     }
                 }
                 if (!got1) {
-                    work[10] = 'I';
-                    work[11] = work[12] = 'L';
+                    work.work[10] = 'I';
+                    work.work[11] = work.work[12] = 'L';
                 }
             }
-            result.push(work.join(''));
+            result.push(work.work.join(''));
         }
         return result;
     }
