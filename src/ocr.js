@@ -15,6 +15,14 @@ class Digit {
         return true;
     }
 
+    width() {
+        return this.segments[0].length;
+    }
+
+    height() {
+        return this.segments.length;
+    }
+
 }
 
 /**
@@ -25,45 +33,45 @@ class Numerals {
     constructor() {
         this.digits = [
             new Digit([' _  ',
-                       '| | ',
-                       '|_| ',
-                       '    ']),
+                '| | ',
+                '|_| ',
+                '    ']),
             new Digit(['    ',
-                       '  | ',
-                       '  | ',
-                       '    ']),
+                '  | ',
+                '  | ',
+                '    ']),
             new Digit([' _  ',
-                       ' _| ',
-                       '|_  ',
-                       '    ']),
+                ' _| ',
+                '|_  ',
+                '    ']),
             new Digit([' _  ',
-                       ' _| ',
-                       ' _| ',
-                       '    ']),
+                ' _| ',
+                ' _| ',
+                '    ']),
             new Digit(['    ',
-                       '|_| ',
-                       '  | ',
-                       '    ']),
+                '|_| ',
+                '  | ',
+                '    ']),
             new Digit([' _  ',
-                       '|_  ',
-                       ' _| ',
-                       '    ']),
+                '|_  ',
+                ' _| ',
+                '    ']),
             new Digit([' _  ',
-                       '|_  ',
-                       '|_| ',
-                       '    ']),
+                '|_  ',
+                '|_| ',
+                '    ']),
             new Digit([' _  ',
-                       '  | ',
-                       '  | ',
-                       '    ']),
+                '  | ',
+                '  | ',
+                '    ']),
             new Digit([' _  ',
-                       '|_| ',
-                       '|_| ',
-                       '    ']),
+                '|_| ',
+                '|_| ',
+                '    ']),
             new Digit([' _  ',
-                       '|_| ',
-                       ' _| ',
-                       '    '])];
+                '|_| ',
+                ' _| ',
+                '    '])];
     }
 
     identify(digit) {
@@ -74,6 +82,14 @@ class Numerals {
         }
         return -1;
         // if we do not want the marker we need to return a result or accept two lambdas.
+    }
+
+    digitWidth() {
+        return this.digits[0].width();
+    }
+
+    digitHeight() {
+        return this.digits[0].height();
     }
 
 }
@@ -123,7 +139,7 @@ class Ocr {
 
         const NUMERALS = new Numerals();
 
-        for (let i = 0; i < lines.length; i += 4) {
+        for (let i = 0; i < lines.length; i += NUMERALS.digitHeight()) {
             let work = new AccountNumberBuilder();
             for (let pos = 0; pos < 9; ++pos) {
 
