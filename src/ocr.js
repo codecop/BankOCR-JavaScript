@@ -50,6 +50,10 @@ class AccountNumber {
         }
     }
 
+    setDigitAt(pos, numeral) {
+        this.work[pos] = String.fromCharCode(numeral + '0'.charCodeAt(0));
+    }
+
     markIllegal() {
         this.work[10] = 'I';
         this.work[11] = 'L';
@@ -84,7 +88,7 @@ class Ocr {
                         }
                     }
                     if (ok) {
-                        work.work[pos] = String.fromCharCode(numeral + '0'.charCodeAt(0));
+                        work.setDigitAt(pos, numeral);
                         got1 = true;
                         break;
                     }
