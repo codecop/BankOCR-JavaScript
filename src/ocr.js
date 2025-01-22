@@ -136,8 +136,18 @@ class Input {
 }
 
 class Line {
-    constructor(lines) {
+    constructor(width, lines) {
+        this.width = width;
         this.lines = lines;
+    }
+
+    getDigitAt(pos) {
+        const segments = [];
+        for (let row = 0; row < this.lines.length; ++row) {
+            segments.push(this.lines[row].substring(this.width * pos, this.width * pos + this.width));
+        }
+        const digit = new Digit(segments);
+        return digit;
     }
 }
 
@@ -159,17 +169,14 @@ class Ocr {
             for (let row = 0; row < numerals.digitHeight(); ++row) {
                 line.push(lines[i + row]);
             }
-            const l = new Line(line);
+            const x = numerals.digitWidth();
+            const l = new Line(x, line);
 
 
             let work = new AccountNumberBuilder();
             for (let pos = 0; pos < 9; ++pos) {
                 const x = numerals.digitWidth();
-                const segments = [];
-                for (let row = 0; row < numerals.digitHeight(); ++row) {
-                    segments.push(l.lines[row].substring(x * pos, x * pos + x));
-                }
-                const digit = new Digit(segments);
+                const digit = l.getDigitAt(pos);
 
                 const numeral = numerals.identify(digit);
                 if (numeral >= 0) {
