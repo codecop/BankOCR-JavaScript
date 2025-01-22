@@ -133,7 +133,13 @@ class Input {
         this.lines = lines;
     }
 
-}   
+}
+
+class Line {
+    constructor(lines) {
+        this.lines = lines;
+    }
+}
 
 class Ocr {
 
@@ -153,6 +159,7 @@ class Ocr {
             for (let row = 0; row < numerals.digitHeight(); ++row) {
                 line.push(lines[i + row]);
             }
+            const l = new Line(line);
 
 
             let work = new AccountNumberBuilder();
@@ -160,7 +167,7 @@ class Ocr {
                 const x = numerals.digitWidth();
                 const segments = [];
                 for (let row = 0; row < numerals.digitHeight(); ++row) {
-                    segments.push(line[row].substring(x * pos, x * pos + x));
+                    segments.push(l.lines[row].substring(x * pos, x * pos + x));
                 }
                 const digit = new Digit(segments);
 
