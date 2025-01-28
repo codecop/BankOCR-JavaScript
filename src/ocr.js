@@ -1,48 +1,50 @@
 const NUMERALS = [
     [' _  ',
-     '| | ',
-     '|_| ',
-     '    '],
+        '| | ',
+        '|_| ',
+        '    '],
     ['    ',
-     '  | ',
-     '  | ',
-     '    '],
+        '  | ',
+        '  | ',
+        '    '],
     [' _  ',
-     ' _| ',
-     '|_  ',
-     '    '],
+        ' _| ',
+        '|_  ',
+        '    '],
     [' _  ',
-     ' _| ',
-     ' _| ',
-     '    '],
+        ' _| ',
+        ' _| ',
+        '    '],
     ['    ',
-     '|_| ',
-     '  | ',
-     '    '],
+        '|_| ',
+        '  | ',
+        '    '],
     [' _  ',
-     '|_  ',
-     ' _| ',
-     '    '],
+        '|_  ',
+        ' _| ',
+        '    '],
     [' _  ',
-     '|_  ',
-     '|_| ',
-     '    '],
+        '|_  ',
+        '|_| ',
+        '    '],
     [' _  ',
-     '  | ',
-     '  | ',
-     '    '],
+        '  | ',
+        '  | ',
+        '    '],
     [' _  ',
-     '|_| ',
-     '|_| ',
-     '    '],
+        '|_| ',
+        '|_| ',
+        '    '],
     [' _  ',
-     '|_| ',
-     ' _| ',
-     '    ']];
+        '|_| ',
+        ' _| ',
+        '    ']];
 
-class AccountNumber {
+class AccountNumberBuilder {
     constructor() {
-        this.accountNumber = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+        this.accountNumber = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+        this.illegal = false;
+
         const numberOfAccountNumberDigits = 9;
         for (let pos = 0; pos < numberOfAccountNumberDigits; ++pos) {
             this.accountNumber[pos] = '?';
@@ -50,16 +52,29 @@ class AccountNumber {
     }
 
     setOneDigitAt(pos, numeral) {
-        this.accountNumber[pos] = String.fromCharCode(numeral + '0'.charCodeAt(0));
+        this.accountNumber[pos] = numeral.toString();
     }
 
     setIllegal() {
-        this.accountNumber[10] = 'I';
-        this.accountNumber[11] = this.accountNumber[12] = 'L';
+        this.illegal = true;
     }
-    
-    joinAccount() {
-        return this.accountNumber.join('')
+
+    build() {
+        const accountNumber = this.accountNumber.join('');
+        // option
+        if (accountNumber.indexOf("?")!= -1) {
+            return accountNumber + " ILL";
+        }
+        return accountNumber + this.marker();
+    }
+
+    marker() {
+        if (this.illegal) {
+            return " ILL";
+
+        } else {
+            return "    ";
+        }
     }
 }
 
@@ -74,7 +89,7 @@ class Ocr {
         const accountNumbers = [];
 
         for (let currentInputLine = 0; currentInputLine < inputLines.length; currentInputLine += 4) {
-            let accountNumber = new AccountNumber();
+            let accountNumber = new AccountNumberBuilder();
             const numberOfAccountNumberDigits = 9;
             for (let pos = 0; pos < numberOfAccountNumberDigits; ++pos) {
                 let foundMatchingDigit = false;
@@ -98,7 +113,7 @@ class Ocr {
                     accountNumber.setIllegal();
                 }
             }
-            accountNumbers.push(accountNumber.joinAccount());
+            accountNumbers.push(accountNumber.build());
         }
 
         return accountNumbers;
