@@ -40,6 +40,12 @@ const NUMERALS = [
      ' _| ',
      '    ']];
 
+class AccountNumber {
+    constructor() {
+        this.accountNumber = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+    }
+}
+
 class Ocr {
 
     /**
@@ -50,12 +56,11 @@ class Ocr {
         /** @type {string[]} */
         const accountNumbers = [];
 
-        
         for (let currentInputLine = 0; currentInputLine < inputLines.length; currentInputLine += 4) {
-            let accountNumber = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+            let accountNumber = new AccountNumber();
             const numberOfAccountNumberDigits = 9;
             for (let pos = 0; pos < numberOfAccountNumberDigits; ++pos) {
-                accountNumber[pos] = '?';
+                accountNumber.accountNumber[pos] = '?';
                 let foundMatchingDigit = false;
                 const availableDigits = 10;
                 for (let numeral = 0; numeral < availableDigits; ++numeral) {
@@ -68,17 +73,17 @@ class Ocr {
                         }
                     }
                     if (isNumeralMatching) {
-                        accountNumber[pos] = String.fromCharCode(numeral + '0'.charCodeAt(0));
+                        accountNumber.accountNumber[pos] = String.fromCharCode(numeral + '0'.charCodeAt(0));
                         foundMatchingDigit = true;
                         break;
                     }
                 }
                 if (!foundMatchingDigit) {
-                    accountNumber[10] = 'I';
-                    accountNumber[11] = accountNumber[12] = 'L';
+                    accountNumber.accountNumber[10] = 'I';
+                    accountNumber.accountNumber[11] = accountNumber.accountNumber[12] = 'L';
                 }
             }
-            accountNumbers.push(accountNumber.join(''));
+            accountNumbers.push(accountNumber.accountNumber.join(''));
         }
 
         return accountNumbers;
