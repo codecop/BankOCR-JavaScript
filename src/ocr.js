@@ -59,6 +59,17 @@ class Template {
                 ' _| ',
                 '    '])];
     }
+
+    get(currentDigit) {
+        for (let numeral = 0; numeral < this.numerals.length; ++numeral) {
+            const isNumeralMatching = this.numerals[numeral].equals(currentDigit);
+            if (isNumeralMatching) {
+                return numeral;
+            }
+        }
+        return -1;
+    }
+
 }
 
 const NUMERALS = new Template();
@@ -122,17 +133,10 @@ class Ocr {
                 }
                 const currentDigit = new Digit(x);
 
-                let foundMatchingDigit = false;
-                const availableDigits = 10;
-                for (let numeral = 0; numeral < availableDigits; ++numeral) {
-                    let isNumeralMatching = NUMERALS.numerals[numeral].equals(currentDigit);
-                    if (isNumeralMatching) {
-                        accountNumber.setOneDigitAt(pos, numeral);
-                        foundMatchingDigit = true;
-                        break;
-                    }
-                }
-                if (!foundMatchingDigit) {
+                const matchingNumeral = NUMERALS.get(currentDigit);
+                if (matchingNumeral != -1) {
+                    accountNumber.setOneDigitAt(pos, matchingNumeral);
+                } else {
                     accountNumber.setIllegal();
                 }
             }
