@@ -2,6 +2,16 @@ class Digit {
     constructor(segments) {
         this.segments = segments;
     }
+    equals(other) {
+        for (let row = 0; row < 4; ++row) {
+            for (let col = 0; col < 4; ++col) {
+                if (this.segments[row][col] !== other.segments[row][col]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
 
 const NUMERALS = [
@@ -108,14 +118,7 @@ class Ocr {
                 let foundMatchingDigit = false;
                 const availableDigits = 10;
                 for (let numeral = 0; numeral < availableDigits; ++numeral) {
-                    let isNumeralMatching = true;
-                    for (let row = 0; row < 4; ++row) {
-                        for (let col = 0; col < 4; ++col) {
-                            if (NUMERALS[numeral].segments[row][col] !== currentDigit.segments[row][col]) {
-                                isNumeralMatching = false;
-                            }
-                        }
-                    }
+                    let isNumeralMatching = NUMERALS[numeral].equals(currentDigit);
                     if (isNumeralMatching) {
                         accountNumber.setOneDigitAt(pos, numeral);
                         foundMatchingDigit = true;
