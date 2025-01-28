@@ -1,7 +1,8 @@
 class Digit {
 
-    constructor(section) {
+    constructor(section, value) {
         this.sections = section;
+        this.value = value;
     }
 
     equals(other) {
@@ -14,57 +15,57 @@ class Digit {
     }
 }
 
-class Template {
+class ArabicDigits {
 
     constructor() {
-        this.numerals = [
+        this.digits = [
             new Digit([' _  ',
                 '| | ',
                 '|_| ',
-                '    ']),
+                '    '], 0),
             new Digit(['    ',
                 '  | ',
                 '  | ',
-                '    ']),
+                '    '], 1),
             new Digit([' _  ',
                 ' _| ',
                 '|_  ',
-                '    ']),
+                '    '], 2),
             new Digit([' _  ',
                 ' _| ',
                 ' _| ',
-                '    ']),
+                '    '], 3),
             new Digit(['    ',
                 '|_| ',
                 '  | ',
-                '    ']),
+                '    '], 4),
             new Digit([' _  ',
                 '|_  ',
                 ' _| ',
-                '    ']),
+                '    '], 5),
             new Digit([' _  ',
                 '|_  ',
                 '|_| ',
-                '    ']),
+                '    '], 6),
             new Digit([' _  ',
                 '  | ',
                 '  | ',
-                '    ']),
+                '    '], 7),
             new Digit([' _  ',
                 '|_| ',
                 '|_| ',
-                '    ']),
+                '    '], 8),
             new Digit([' _  ',
                 '|_| ',
                 ' _| ',
-                '    '])];
+                '    '], 9)];
     }
 
-    get(currentDigit) {
-        for (let numeral = 0; numeral < this.numerals.length; ++numeral) {
-            const isNumeralMatching = this.numerals[numeral].equals(currentDigit);
-            if (isNumeralMatching) {
-                return numeral;
+    getValueOf(digit) {
+        for (let i = 0; i < this.digits.length; ++i) {
+            const isMatching = this.digits[i].equals(digit);
+            if (isMatching) {
+                return this.digits[i].value;
             }
         }
         return -1;
@@ -72,7 +73,7 @@ class Template {
 
 }
 
-const NUMERALS = new Template();
+const TEMPLATE = new ArabicDigits();
 
 class AccountNumberBuilder {
     constructor() {
@@ -133,7 +134,7 @@ class Ocr {
                 }
                 const currentDigit = new Digit(x);
 
-                const matchingNumeral = NUMERALS.get(currentDigit);
+                const matchingNumeral = TEMPLATE.getValueOf(currentDigit);
                 if (matchingNumeral != -1) {
                     accountNumber.setOneDigitAt(pos, matchingNumeral);
                 } else {
