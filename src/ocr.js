@@ -9,46 +9,46 @@ const NUMERALS = [
         '| | ',
         '|_| ',
         '    ']),
-        new Digit(['    ',
+    new Digit(['    ',
         '  | ',
         '  | ',
         '    ']),
-        new Digit([' _  ',
+    new Digit([' _  ',
         ' _| ',
         '|_  ',
         '    ']),
-        new Digit([' _  ',
+    new Digit([' _  ',
         ' _| ',
         ' _| ',
         '    ']),
-        new Digit(['    ',
+    new Digit(['    ',
         '|_| ',
         '  | ',
         '    ']),
-        new Digit([' _  ',
+    new Digit([' _  ',
         '|_  ',
         ' _| ',
         '    ']),
-        new Digit([' _  ',
+    new Digit([' _  ',
         '|_  ',
         '|_| ',
         '    ']),
-        new Digit([' _  ',
+    new Digit([' _  ',
         '  | ',
         '  | ',
         '    ']),
-        new Digit([' _  ',
+    new Digit([' _  ',
         '|_| ',
         '|_| ',
         '    ']),
-        new Digit([' _  ',
+    new Digit([' _  ',
         '|_| ',
         ' _| ',
         '    '])];
 
 class AccountNumberBuilder {
     constructor() {
-        this.accountNumber = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+        this.accountNumber = [];
         this.illegal = false;
 
         const numberOfAccountNumberDigits = 9;
@@ -68,7 +68,7 @@ class AccountNumberBuilder {
     build() {
         const accountNumber = this.accountNumber.join('');
         // option
-        if (accountNumber.indexOf("?")!= -1) {
+        if (accountNumber.indexOf("?") != -1) {
             return accountNumber + " ILL";
         }
         return accountNumber + this.marker();
@@ -98,13 +98,20 @@ class Ocr {
             let accountNumber = new AccountNumberBuilder();
             const numberOfAccountNumberDigits = 9;
             for (let pos = 0; pos < numberOfAccountNumberDigits; ++pos) {
+                let x = [];
+                for (let row = 0; row < 4; ++row) {
+                    let y = inputLines[currentInputLine + row].substring(4 * pos, 4 * pos + 4);
+                    x.push(y);
+                }
+                const currentDigit = new Digit(x);
+
                 let foundMatchingDigit = false;
                 const availableDigits = 10;
                 for (let numeral = 0; numeral < availableDigits; ++numeral) {
                     let isNumeralMatching = true;
                     for (let row = 0; row < 4; ++row) {
                         for (let col = 0; col < 4; ++col) {
-                            if (NUMERALS[numeral].segments[row][col] !== inputLines[currentInputLine + row][4 * pos + col]) {
+                            if (NUMERALS[numeral].segments[row][col] !== currentDigit.segments[row][col]) {
                                 isNumeralMatching = false;
                             }
                         }
