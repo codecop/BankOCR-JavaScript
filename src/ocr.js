@@ -1,13 +1,13 @@
 class Digit {
-    constructor(segments) {
-        this.segments = segments;
+
+    constructor(section) {
+        this.sections = section;
     }
+
     equals(other) {
-        for (let row = 0; row < 4; ++row) {
-            for (let col = 0; col < 4; ++col) {
-                if (this.segments[row][col] !== other.segments[row][col]) {
-                    return false;
-                }
+        for (let row = 0; row < this.sections.length; ++row) {
+            if (this.sections[row] !== other.sections[row]) {
+                return false;
             }
         }
         return true;
