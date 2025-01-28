@@ -14,47 +14,54 @@ class Digit {
     }
 }
 
-const NUMERALS = [
-    new Digit([' _  ',
-        '| | ',
-        '|_| ',
-        '    ']),
-    new Digit(['    ',
-        '  | ',
-        '  | ',
-        '    ']),
-    new Digit([' _  ',
-        ' _| ',
-        '|_  ',
-        '    ']),
-    new Digit([' _  ',
-        ' _| ',
-        ' _| ',
-        '    ']),
-    new Digit(['    ',
-        '|_| ',
-        '  | ',
-        '    ']),
-    new Digit([' _  ',
-        '|_  ',
-        ' _| ',
-        '    ']),
-    new Digit([' _  ',
-        '|_  ',
-        '|_| ',
-        '    ']),
-    new Digit([' _  ',
-        '  | ',
-        '  | ',
-        '    ']),
-    new Digit([' _  ',
-        '|_| ',
-        '|_| ',
-        '    ']),
-    new Digit([' _  ',
-        '|_| ',
-        ' _| ',
-        '    '])];
+class Template {
+
+    constructor() {
+        this.numerals = [
+            new Digit([' _  ',
+                '| | ',
+                '|_| ',
+                '    ']),
+            new Digit(['    ',
+                '  | ',
+                '  | ',
+                '    ']),
+            new Digit([' _  ',
+                ' _| ',
+                '|_  ',
+                '    ']),
+            new Digit([' _  ',
+                ' _| ',
+                ' _| ',
+                '    ']),
+            new Digit(['    ',
+                '|_| ',
+                '  | ',
+                '    ']),
+            new Digit([' _  ',
+                '|_  ',
+                ' _| ',
+                '    ']),
+            new Digit([' _  ',
+                '|_  ',
+                '|_| ',
+                '    ']),
+            new Digit([' _  ',
+                '  | ',
+                '  | ',
+                '    ']),
+            new Digit([' _  ',
+                '|_| ',
+                '|_| ',
+                '    ']),
+            new Digit([' _  ',
+                '|_| ',
+                ' _| ',
+                '    '])];
+    }
+}
+
+const NUMERALS = new Template();
 
 class AccountNumberBuilder {
     constructor() {
@@ -118,7 +125,7 @@ class Ocr {
                 let foundMatchingDigit = false;
                 const availableDigits = 10;
                 for (let numeral = 0; numeral < availableDigits; ++numeral) {
-                    let isNumeralMatching = NUMERALS[numeral].equals(currentDigit);
+                    let isNumeralMatching = NUMERALS.numerals[numeral].equals(currentDigit);
                     if (isNumeralMatching) {
                         accountNumber.setOneDigitAt(pos, numeral);
                         foundMatchingDigit = true;
