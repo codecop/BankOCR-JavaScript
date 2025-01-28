@@ -127,12 +127,15 @@ class Ocr {
             let accountNumber = new AccountNumberBuilder();
             const numberOfAccountNumberDigits = 9;
             for (let pos = 0; pos < numberOfAccountNumberDigits; ++pos) {
+               
+                // nasty, will need Line abstraction to give me 9 digits
                 let x = [];
                 for (let row = 0; row < 4; ++row) {
                     let y = inputLines[currentInputLine + row].substring(4 * pos, 4 * pos + 4);
                     x.push(y);
                 }
                 const currentDigit = new Digit(x);
+                // ---
 
                 const matchingNumeral = TEMPLATE.getValueOf(currentDigit);
                 if (matchingNumeral != -1) {
